@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Input, Upload, message, Table } from 'antd';
+import { Button, Input, Upload, message, Table, Typography } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import Form from 'antd/lib/form/Form';
+
+const { Title } = Typography;
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -17,12 +19,6 @@ function getBase64(img, callback) {
       span: 8,
     },
     wrapperCol: {
-      span: 16,
-    },
-  };
-  const tailLayout = {
-    wrapperCol: {
-      offset: 8,
       span: 16,
     },
   };
@@ -51,7 +47,13 @@ export class UploadForm extends React.Component {
   componentDidMount() {
     axios.get(url)
         .then(response => {
-            this.setState({predictionHistory: response.data});
+            this.setState({predictionHistory: response.data.map((prediction) => {
+                var date = new Date(prediction.predictionTime)
+                return {
+                    predictedValue: prediction.predictedValue,
+                    predictionTime: date.toTimeString() + ' ' + date.toDateString() 
+                }
+            })});
         });
   }
 
@@ -69,9 +71,10 @@ export class UploadForm extends React.Component {
         axios.get(url)
         .then(response => {
             this.setState({predictionHistory: response.data.map((prediction) => {
+                var date = new Date(prediction.predictionTime)
                 return {
                     predictedValue: prediction.predictedValue,
-                    predictionTime: new Date(prediction.predictionTime)
+                    predictionTime: date.toTimeString() + ' ' + date.toDateString() 
                 }
             })});
         })
@@ -128,7 +131,7 @@ export class UploadForm extends React.Component {
         <div>
         
       <Form {...layout} onFinish={e => this.submit(e)}>
-        <h1>Predicted Value: {this.state.predictedValue}</h1>
+        <Title>Predicted Value: {this.state.predictedValue}</Title>
         {/* <Input type="file" onChange={e => this.setFile(e)} /> */}
         <Upload
             name="avatar"
@@ -141,8 +144,9 @@ export class UploadForm extends React.Component {
             {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
 
         </Upload>
-        <Button htmlType="submit">Upload</Button>
+        <Button htmlType="submit">Predict</Button>
       </Form>
+      <Title level={2}> Prediction History</Title>
       <Table columns={columns} dataSource={this.state.predictionHistory}/>
       
       </div>
