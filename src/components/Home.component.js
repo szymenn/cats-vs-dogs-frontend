@@ -12,7 +12,7 @@ function getBase64(img, callback) {
     reader.readAsDataURL(img);
   }
 
-  const url = `https://localhost:5001/api/prediction`;
+  const url = `http://localhost:5000/api/prediction`;
 
   const layout = {
     labelCol: {
