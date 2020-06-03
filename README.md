@@ -28,7 +28,9 @@ Or if you're using Windows run:
 `winpty docker run -it -p 3001:3000 catsvsdogs-frontend`
 
 ## Screenshots:
+
 <img src="https://github.com/szymenn/cats-vs-dogs-frontend/blob/master/catsvsdogs1.jpg" />
+
 <img src="https://github.com/szymenn/cats-vs-dogs-frontend/blob/master/catsvsdogs2.jpg" />
 
 
