@@ -6,7 +6,7 @@ App uses Web API to get predictions whether it's a cat or a dog based on the inp
 - React.js
 - Ant Design
 
-### Run app on your computer
+### Run on your computer
 Prerequisites:
 - Git
 - Docker
